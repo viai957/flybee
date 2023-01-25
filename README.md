@@ -1,44 +1,89 @@
-# flybee
-Open Sorce Routing Algorithm
-# Overview
-Paragraph 1
-This repository contains a routing engine built in Python that uses various algorithms to find the shortest path between two coordinates. The engine is designed to work with OpenStreetMap data and can be easily integrated into any application that requires routing functionality.
+# Flybee
+# Open Source routing System
 
-Paragraph 2
+## Overview
+This repository contains a Python implementation of a routing engine for road networks, similar to GraphHopper. The routing engine is built using the NetworkX library and includes several different routing algorithms, such as Dijkstra, A* bidirectional, and Contraction Hierarchy (CH). It also includes a spatial index for efficient nearest-neighbor searches and a utility for loading road network data in the GraphML format.
+
+
 ## Installation
+
 To use the routing engine, you will need to have Python 3.6 or higher installed on your system. You will also need to install the following dependencies:
 
-NetworkX
--OSMNX
--RTree
--Rtree
--Python-Levenshtein
-*You can install these dependencies by running the following command: *
+- NetworkX (2.5 or higher)
+- OSMNX (0.14 or higher)
+- RTree (0.9 or higher)
+- Sharply (1.7 or higher)
+- Python-Levenshtein
 
-##Copy code
-`pip install networkx osmnx rtree python-levenshtein`
+To install the package, clone the repository and install the required dependencies using pip:
 
-##Usage
-Passage 3
-The routing engine can be used to find the shortest path between two coordinates using different algorithms. Currently, the following algorithms are supported:
+```bash
+git clone https://github.com/viai957/flybee
+cd routing_engine
+pip install -r requirements.txt
+```
+    
+## Usage
 
-Dijkstra
-A*
-Bidirectional Dijkstra
-A* bidirectional
-To use the routing engine, you will need to provide it with a graph file in GraphML format. You can create a graph file using OSMNX by specifying the bounding box of the area for which you want to create the graph.
+The package includes several different modules for different functionality:
 
-Once you have the graph file, you can use the RoutingEngine class to find the shortest path between two coordinates. The class takes in the following parameters:
+- graph_utils.py: Contains functions for loading and preprocessing road network data in the GraphML format.
+- spatial_index.py: Implements a spatial index for efficient nearest-neighbor searches.
+- shortest_path.py: Implements several different routing algorithms, including Dijkstra, A* bidirectional, and Contraction Hierarchy (CH).
 
-graph_file: The path to the graph file in GraphML format
-algorithm: The algorithm to use to find the shortest path. Can be one of 'dijkstra', 'astar', 'bidijkstra', or 'astar_bidirectional'
-spatial_index: The spatial index to use to find the nearest node in the graph to the start and end coordinates
-The class also has several methods that can be used to find the shortest path between two coordinates:
+To use the package, first load the road network data using the ``load_graphml`` function from ``graph_utils.py``. Then, create a spatial index using the create_spatial_index function from ``spatial_index.py``. Finally, use one of the routing algorithms in `shortest_path.py` to find the shortest path between two points on the road network.
 
-find_shortest_path: Finds the shortest path between two coordinates
-find_alternative_paths: Finds alternative paths between two coordinates
-find_shortest_path_edge_to_edge: Finds the shortest path between two edges
-The find_shortest_path method takes in the following parameters:
+For example, to find the shortest path between two coordinates using the Dijkstra algorithm:
 
-pickup_coords: The pickup coordinates as a tuple (latitude, longitude)
-dropoff_coords: The dropoff coordinates as a tuple
+
+```
+from graph_utils import load_graphml
+from spatial_index import create_spatial_index
+from shortest_path import shortest_path_coords_dijkstra
+
+# Load the road network data
+G = load_graphml('path/to/road_network.graphml')
+
+# Create a spatial index for the road network graph
+spatial_index = index.Index()
+for node, data in G.nodes(data=True):
+    spatial_index.insert(node, (data['y'], data['x'], data['y'], data['x']))
+
+# Set the coordinates of the pickup and dropoff points
+pickup_coords = (40.751231, -73.994148)
+dropoff_coords = (40.747638, -73.973999)
+
+# Create an instance of the AStarBidirection class
+astar = AStarBidirection(G, spatial_index)
+
+# Find the shortest path between the pickup and dropoff points
+path_coords = ast
+
+```
+
+## Authors
+
+- [@vignesh](https://www.github.com/viai957)
+
+
+## Contributing
+
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+Please adhere to this project's `code of conduct`.
+
+
+## Features
+
+This is a venilla version of this routing engine much more to come in, please share your hand by contributing
+
+- A - B routing (Find the shortest path given the pickup and drop coordinates)
+- Pooling (Finding a optimal dynamic path based on available space, pickup and drop)
+- Spacial Metrix ( A recomputed Spacial Matrix file with also dynamic weathar updates)
+- Distance Matrix ( By Tweaking the Distance Matrix the efficency could be increased)
+
+
+## 🚀 About Me
+I'm a Ml tinkerer working on few projects made me realize building an Open Sourcer Routing sytem with API calls with no cost conversion would make a huge diffrence for small scale startups to test few cases with easy to understand python code and proper documentation. You could come across many other open source routing engine but most of them are built on 20 years old technology in todays day and age it's archaic. To accommodate current day business needs we need to build robust product on the latest technology
