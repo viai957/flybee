@@ -19,7 +19,7 @@ To install the package, clone the repository and install the required dependenci
 
 ```bash
 git clone https://github.com/viai957/flybee
-cd routing_engine
+cd flybee/core/src/routing
 pip install -r requirements.txt
 ```
     
